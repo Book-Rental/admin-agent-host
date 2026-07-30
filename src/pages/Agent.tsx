@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { loadWidget } from "../utils/widgetLoader";
+
 
 const Agent = () => {
     useEffect(() => {
