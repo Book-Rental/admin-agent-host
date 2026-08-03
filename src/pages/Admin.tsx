@@ -7,7 +7,7 @@ const ADMIN_CONTAINER_ID = "Admin-widget";
 
 const Admin = () => {
     const [isLoading, setIsLoading] = useState(true);
-
+    console.log("isLoading", isLoading)
     useEffect(() => {
         if (!ADMIN_WIDGET) {
             console.error("Widget URL is undefined.");

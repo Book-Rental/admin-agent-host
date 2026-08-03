@@ -6,7 +6,7 @@ const AGENT_CONTAINER_ID = "Agent-widget";
 
 const Agent = () => {
     const [isLoading, setIsLoading] = useState(true);
-
+    console.log("isLoading",isLoading)
     useEffect(() => {
         if (!AGENT_WIDGET) {
             console.error("Widget URL is undefined.");
