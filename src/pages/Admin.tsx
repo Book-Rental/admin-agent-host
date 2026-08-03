@@ -1,26 +1,48 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { loadWidget, removeWidget } from "../utils/widgetLoader";
 
+
+const ADMIN_WIDGET = import.meta.env.VITE_ADMIN_WIDGET_URL;
+const ADMIN_CONTAINER_ID = "Admin-widget";
 
 const Admin = () => {
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
-        // Will load later
-        // loadWidget(import.meta.env.VITE_ADMIN_WIDGET_URL, "admin-widget");
+        if (!ADMIN_WIDGET) {
+            console.error("Widget URL is undefined.");
+            return;
+        }
+
+        const handleWidgetLoading = (event: any) => {
+            if (event.detail !== undefined) {
+                setIsLoading(event.detail);
+            }
+        };
+
+        window.addEventListener(
+            "widget-loading-status",
+            handleWidgetLoading
+        );
+
+        loadWidget(ADMIN_WIDGET, ADMIN_CONTAINER_ID, {
+            name: "Admin-widget",
+        });
+
+        return () => {
+            window.removeEventListener(
+                "widget-loading-status",
+                handleWidgetLoading
+            );
+            removeWidget(ADMIN_CONTAINER_ID);
+        };
     }, []);
 
     return (
-        <div>
-            <h2>Admin Widget</h2>
-
-            <div
-                id="admin-widget"
-                style={{
-                    minHeight: "600px",
-                    border: "1px dashed gray",
-                }}
-            >
-                Admin widget will load here...
-            </div>
-        </div>
+        <div
+            id={ADMIN_CONTAINER_ID}
+            className="min-h-[calc(100vh-64px)] w-full"
+        ></div>
     );
 };
 
