@@ -1,10 +1,22 @@
 import { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { loadWidget, removeWidget } from "../utils/widgetLoader";
+
+interface AgentPageProps {
+  module: "pickup" | "delivery";
+  view:
+    | "orders"
+    | "details"
+    | "verification"
+    | "confirmation";
+}
 
 const AGENT_WIDGET = import.meta.env.VITE_AGENT_WIDGET_URL;
 const AGENT_CONTAINER_ID = "Agent-widget";
 
-const Agent = () => {
+const Agent = ({ module, view }: AgentPageProps) => {
+    const location = useLocation();
+    const { shipmentId } = useParams<{ shipmentId?: string }>();
     const [isLoading, setIsLoading] = useState(true);
     console.log("isLoading",isLoading)
     useEffect(() => {
@@ -13,20 +25,21 @@ const Agent = () => {
             return;
         }
 
-        const handleWidgetLoading = (event: any) => {
-            if (event.detail !== undefined) {
-                setIsLoading(event.detail);
+        const handleWidgetLoading = (event: Event) => {
+            const customEvent = event as CustomEvent<boolean>;
+            if (customEvent.detail !== undefined) {
+                setIsLoading(customEvent.detail);
             }
         };
 
-        window.addEventListener(
-            "widget-loading-status",
-            handleWidgetLoading
-        );
+        window.addEventListener( "widget-loading-status", handleWidgetLoading );
 
-        loadWidget(AGENT_WIDGET, AGENT_CONTAINER_ID, {
-            name: "Agent-widget",
-        });
+        const widgetParams = { name: "agent-widget",  module, view, shipmentId };
+        loadWidget(
+            AGENT_WIDGET,
+            AGENT_CONTAINER_ID,
+            widgetParams
+        );
 
         return () => {
             window.removeEventListener(
@@ -35,7 +48,7 @@ const Agent = () => {
             );
             removeWidget(AGENT_CONTAINER_ID);
         };
-    }, []);
+    }, [module , view,shipmentId, location.pathname]);
 
     return (
         <div

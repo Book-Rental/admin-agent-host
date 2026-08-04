@@ -1,7 +1,6 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate , Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
-
 import AuthPage from "../pages/AuthPage";
 import RoleSelectPage from "../pages/RoleSelectPage";
 import ProtectedRoute from "./ProtectedRoute";
@@ -14,7 +13,7 @@ const RootRedirect = () => {
 
   if (!isAuthenticated) return <Navigate to="/auth" replace />;
   if (!role) return <Navigate to="/select-role" replace />;
-  return <Navigate to={role === "admin" ? "/admin" : "/agent"} replace />;
+  return <Navigate to={role === "admin" ? "/admin" : "/agent/pickup-orders"} replace />;
 };
 
 const AppRoutes = () => (
@@ -33,17 +32,25 @@ const AppRoutes = () => (
           </ProtectedRoute>
         }
       />
-      <Route
-        path="/agent/*"
-        element={
-          <ProtectedRoute allowedRoles={["agent"]}>
-            <Agent />
-          </ProtectedRoute>
-        }
-      />
-    </Route>
 
-    {/* catch-all for any unmatched path */}
+      <Route
+          element={
+            <ProtectedRoute allowedRoles={["agent"]}>
+              <Outlet />
+            </ProtectedRoute>
+          }
+        >
+        <Route path="/agent/pickup-orders" element={ <Agent module="pickup" view="orders" /> }/>
+        <Route path="/agent/pickup-orders/:shipmentId" element={<Agent module="pickup" view="details" />} />
+        <Route path="/agent/pickup-orders/:shipmentId/pickup-verification" element={<Agent module="pickup" view="verification" />} />
+        <Route path="/agent/pickup-orders/:shipmentId/confirmation" element={<Agent module="pickup" view="confirmation" />} />
+        <Route path="/agent/delivery-orders" element={<Agent module="delivery" view="orders" />} />
+        <Route path="/agent/delivery-orders/:shipmentId" element={<Agent module="delivery" view="details" />} />
+        <Route path="/agent/delivery-orders/:shipmentId/delivery-verification" element={<Agent module="delivery" view="verification" />} />
+        <Route path="/agent/delivery-orders/:shipmentId/confirmation" element={<Agent module="delivery" view="confirmation" />} />
+      </Route>
+     </Route> 
+
     <Route path="*" element={<Navigate to="/" replace />} />
   </Routes>
 );

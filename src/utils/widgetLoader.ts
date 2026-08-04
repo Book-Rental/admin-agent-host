@@ -8,6 +8,8 @@ declare global {
 export const loadWidget = (
   url: string,
   containerId: string,
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  params?: Record<string, any>,
   data?: Record<string, string>
 ) => {
   const container = document.getElementById(containerId);
@@ -31,6 +33,7 @@ export const loadWidget = (
     window.renderReactWidget?.(
       JSON.stringify({
         containerElementId: containerId,
+        ...params,
       })
     );
   };
@@ -41,7 +44,6 @@ export const loadWidget = (
 
   document.body.appendChild(script);
 };
-
 
 export const removeWidget = (containerId: string) => {
   window.unmountReactWidget?.(containerId);
