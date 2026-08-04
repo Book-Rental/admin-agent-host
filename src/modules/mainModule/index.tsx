@@ -9,7 +9,7 @@ const MainLayout = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [widgetLoaded, setWidgetLoaded] = useState(false);
-
+    console.log(widgetLoaded)
     const breadcrumb = useMemo(() => {
         const dynamicBreadcrumb = getBreadcrumb(
             location.pathname,
@@ -24,7 +24,7 @@ const MainLayout = () => {
     useEffect(() => {
         setWidgetLoaded(false);
     }, [location.pathname, location.search]);
-    
+
     useEffect(() => {
         const handleWidgetLoading = (event: CustomEvent<boolean>) => {
             setWidgetLoaded(!event.detail);
