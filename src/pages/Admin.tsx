@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { loadWidget, removeWidget } from "../utils/widgetLoader";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { Rb_LoadingSpinner } from "@rentbook/rentbook-ui-lib";
 
 
 const ADMIN_WIDGET = import.meta.env.VITE_ADMIN_WIDGET_URL;
@@ -18,14 +21,16 @@ interface AdminProps {
 
 
 const Admin = ({ view }: AdminProps) => {
+
+    const { userInfo } = useSelector((state: RootState) => state.auth);
     const [isLoading, setIsLoading] = useState(true);
-    console.log("isLoading", isLoading)
+  
     useEffect(() => {
         if (!ADMIN_WIDGET) {
             console.error("Widget URL is undefined.");
             return;
         }
-
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const handleWidgetLoading = (event: any) => {
             if (event.detail !== undefined) {
                 setIsLoading(event.detail);
@@ -40,6 +45,7 @@ const Admin = ({ view }: AdminProps) => {
         loadWidget(ADMIN_WIDGET, ADMIN_CONTAINER_ID, {
             name: "Admin-widget",
             view,
+            userInfo,
         });
 
         return () => {
@@ -49,13 +55,20 @@ const Admin = ({ view }: AdminProps) => {
             );
             removeWidget(ADMIN_CONTAINER_ID);
         };
-    }, [view]);
+    }, [view, userInfo]);
 
     return (
-        <div
-            id={ADMIN_CONTAINER_ID}
-            className="min-h-[calc(100vh-64px)] w-full"
-        ></div>
+        <div className="relative w-full min-h-[400px]">
+            {isLoading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-50/50">
+                    <Rb_LoadingSpinner />
+                </div>
+            )}
+            <div
+                id={ADMIN_CONTAINER_ID}
+                className={isLoading ? "invisible h-0 overflow-hidden" : "w-full block"}
+            ></div>
+        </div>
     );
 };
 

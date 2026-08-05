@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { loadWidget, removeWidget } from "../utils/widgetLoader";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 interface AgentPageProps {
   module: "pickup" | "delivery";
@@ -15,6 +17,7 @@ const AGENT_WIDGET = import.meta.env.VITE_AGENT_WIDGET_URL;
 const AGENT_CONTAINER_ID = "Agent-widget";
 
 const Agent = ({ module, view }: AgentPageProps) => {
+    const { userInfo } = useSelector((state: RootState) => state.auth);
     const location = useLocation();
     const { shipmentId } = useParams<{ shipmentId?: string }>();
     const [isLoading, setIsLoading] = useState(true);
@@ -34,7 +37,7 @@ const Agent = ({ module, view }: AgentPageProps) => {
 
         window.addEventListener( "widget-loading-status", handleWidgetLoading );
 
-        const widgetParams = { name: "agent-widget",  module, view, shipmentId };
+        const widgetParams = { name: "agent-widget",  module, view, shipmentId ,userInfo, };
         loadWidget(
             AGENT_WIDGET,
             AGENT_CONTAINER_ID,
@@ -48,7 +51,7 @@ const Agent = ({ module, view }: AgentPageProps) => {
             );
             removeWidget(AGENT_CONTAINER_ID);
         };
-    }, [module , view,shipmentId, location.pathname]);
+    }, [module , view,shipmentId, location.pathname,userInfo]);
 
     return (
         <div

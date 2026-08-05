@@ -2,7 +2,6 @@ import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 import AuthPage from "../pages/AuthPage";
-import RoleSelectPage from "../pages/RoleSelectPage";
 import ProtectedRoute from "./ProtectedRoute";
 import MainLayout from "../modules/mainModule";
 import Admin from "../pages/Admin";
@@ -12,22 +11,27 @@ const RootRedirect = () => {
   const { isAuthenticated, role } = useSelector((state: RootState) => state.auth);
 
   if (!isAuthenticated) return <Navigate to="/auth" replace />;
-  if (!role) return <Navigate to="/select-role" replace />;
-  return <Navigate to={role === "admin" ? "/admin" : "/agent/pickup-orders"} replace />;
+  if (!role) return <Navigate to="/auth" replace />;
+
+  return (
+    <Navigate
+      to={role === "AGENT" ? "/agent/pickup-orders" : "/admin"}
+      replace
+    />
+  );
 };
 
 const AppRoutes = () => (
   <Routes>
     <Route path="/" element={<RootRedirect />} />
     <Route path="/auth" element={<AuthPage />} />
-    <Route path="/select-role" element={<RoleSelectPage />} />
     <Route path="/unauthorized" element={<div>Not authorized</div>} />
 
     <Route element={<MainLayout />}>
       <Route
         path="/admin/*"
         element={
-          <ProtectedRoute allowedRoles={["admin"]}>
+          <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
             <Admin view="admin" />
           </ProtectedRoute>
         }
@@ -35,7 +39,7 @@ const AppRoutes = () => (
       <Route
         path="/agents"
         element={
-          <ProtectedRoute allowedRoles={["admin"]}>
+          <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
             <Admin view="agents" />
           </ProtectedRoute>
         }
@@ -45,7 +49,7 @@ const AppRoutes = () => (
       <Route
         path="/agents/new"
         element={
-          <ProtectedRoute allowedRoles={["admin"]}>
+          <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
             <Admin view="create-agent" />
           </ProtectedRoute>
         }
@@ -55,7 +59,7 @@ const AppRoutes = () => (
       <Route
         path="/agents/:agentId"
         element={
-          <ProtectedRoute allowedRoles={["admin"]}>
+          <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
             <Admin view="agent-details" />
           </ProtectedRoute>
         }
@@ -63,7 +67,7 @@ const AppRoutes = () => (
       <Route
         path="/orders"
         element={
-          <ProtectedRoute allowedRoles={["admin"]}>
+          <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
             <Admin view="orders" />
           </ProtectedRoute>
         }
@@ -71,7 +75,7 @@ const AppRoutes = () => (
       <Route
         path="/orders/:id"
         element={
-          <ProtectedRoute allowedRoles={["admin"]}>
+          <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
             <Admin view="order-details" />
           </ProtectedRoute>
         }
@@ -81,7 +85,7 @@ const AppRoutes = () => (
       <Route
         path="/agents/:agentId/edit"
         element={
-          <ProtectedRoute allowedRoles={["admin"]}>
+          <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
             <Admin view="edit-agent" />
           </ProtectedRoute>
         }
@@ -90,7 +94,7 @@ const AppRoutes = () => (
 
       <Route
         element={
-          <ProtectedRoute allowedRoles={["agent"]}>
+          <ProtectedRoute allowedRoles={["AGENT"]}>
             <Outlet />
           </ProtectedRoute>
         }

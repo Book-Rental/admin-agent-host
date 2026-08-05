@@ -18,21 +18,24 @@ const AuthPage = () => {
       console.error("Auth Widget URL is undefined. Check your environment variables.");
       return;
     }
-
+ // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleWidgetLoading = (event: any) => {
       if (event.detail !== undefined) setIsLoading(event.detail);
     };
     window.addEventListener("widget-loading-status", handleWidgetLoading);
 
-    loadWidget(AUTH_WIDGET_URL, WIDGET_CONTAINER_ID, { name: "Profile-widget" });
+    loadWidget(AUTH_WIDGET_URL, WIDGET_CONTAINER_ID, { name: "Profile-widget", app: "admin", });
 
     const handleLoginSuccess = (event: Event) => {
+    
       const customEvent = event as CustomEvent;
       const { userInfo } = customEvent.detail;
-
       dispatch(loginSuccess({ userInfo }));
-
-      navigate("/select-role");
+      if (userInfo.role === "AGENT") {
+        navigate("/agent/pickup-orders");
+      } else {
+        navigate("/admin");
+      }
     };
 
     window.addEventListener("login-widget-success", handleLoginSuccess);

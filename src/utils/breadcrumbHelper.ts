@@ -4,7 +4,7 @@ export const getBreadcrumb = (
   pathname: string,
   _search: string
 ): BreadcrumbItem[] => {
-
+  console.log("search",_search)
   // Pickup Details
   if (
     pathname.startsWith("/agent/pickup-orders/") &&
