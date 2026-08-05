@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate , Outlet } from "react-router-dom";
+import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 import AuthPage from "../pages/AuthPage";
@@ -28,19 +28,74 @@ const AppRoutes = () => (
         path="/admin/*"
         element={
           <ProtectedRoute allowedRoles={["admin"]}>
-            <Admin />
+            <Admin view="admin" />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/agents"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <Admin view="agents" />
           </ProtectedRoute>
         }
       />
 
+      {/* Create Agent */}
       <Route
-          element={
-            <ProtectedRoute allowedRoles={["agent"]}>
-              <Outlet />
-            </ProtectedRoute>
-          }
-        >
-        <Route path="/agent/pickup-orders" element={ <Agent module="pickup" view="orders" /> }/>
+        path="/agents/new"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <Admin view="create-agent" />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Agent Details */}
+      <Route
+        path="/agents/:agentId"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <Admin view="agent-details" />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/orders"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <Admin view="orders" />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/orders/:id"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <Admin view="order-details" />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Edit Agent */}
+      <Route
+        path="/agents/:agentId/edit"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <Admin view="edit-agent" />
+          </ProtectedRoute>
+        }
+      />
+
+
+      <Route
+        element={
+          <ProtectedRoute allowedRoles={["agent"]}>
+            <Outlet />
+          </ProtectedRoute>
+        }
+      >
+        <Route path="/agent/pickup-orders" element={<Agent module="pickup" view="orders" />} />
         <Route path="/agent/pickup-orders/:shipmentId" element={<Agent module="pickup" view="details" />} />
         <Route path="/agent/pickup-orders/:shipmentId/pickup-verification" element={<Agent module="pickup" view="verification" />} />
         <Route path="/agent/pickup-orders/:shipmentId/confirmation" element={<Agent module="pickup" view="confirmation" />} />
@@ -49,7 +104,7 @@ const AppRoutes = () => (
         <Route path="/agent/delivery-orders/:shipmentId/delivery-verification" element={<Agent module="delivery" view="verification" />} />
         <Route path="/agent/delivery-orders/:shipmentId/confirmation" element={<Agent module="delivery" view="confirmation" />} />
       </Route>
-     </Route> 
+    </Route>
 
     <Route path="*" element={<Navigate to="/" replace />} />
   </Routes>

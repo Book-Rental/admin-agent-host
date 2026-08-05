@@ -5,7 +5,19 @@ import { loadWidget, removeWidget } from "../utils/widgetLoader";
 const ADMIN_WIDGET = import.meta.env.VITE_ADMIN_WIDGET_URL;
 const ADMIN_CONTAINER_ID = "Admin-widget";
 
-const Admin = () => {
+interface AdminProps {
+    view:
+    | "admin"
+    | "agents"
+    | "create-agent"
+    | "agent-details"
+    | "edit-agent"
+    | "order-details"
+    | "orders";
+}
+
+
+const Admin = ({ view }: AdminProps) => {
     const [isLoading, setIsLoading] = useState(true);
     console.log("isLoading", isLoading)
     useEffect(() => {
@@ -27,6 +39,7 @@ const Admin = () => {
 
         loadWidget(ADMIN_WIDGET, ADMIN_CONTAINER_ID, {
             name: "Admin-widget",
+            view,
         });
 
         return () => {
@@ -36,7 +49,7 @@ const Admin = () => {
             );
             removeWidget(ADMIN_CONTAINER_ID);
         };
-    }, []);
+    }, [view]);
 
     return (
         <div
