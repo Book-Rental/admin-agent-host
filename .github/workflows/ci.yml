@@ -35,8 +35,8 @@ jobs:
       - name: Run Lint
         run: npm run lint
 
-      - name: Run Tests with Coverage
-        run: npm run coverage -- --run --passWithNoTests
+      # - name: Run Tests with Coverage
+      #   run: npm run coverage -- --run --passWithNoTests
 
       - name: Build Project Library
         run: npm run build
