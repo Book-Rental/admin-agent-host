@@ -12,7 +12,7 @@ const ProtectedRoute = ({ allowedRoles, children }: Props) => {
   const { isAuthenticated, role } = useSelector((state: RootState) => state.auth);
 
   if (!isAuthenticated) return <Navigate to="/auth" replace />;
-  if (!role) return <Navigate to="/select-role" replace />;
+  if (!role) return <Navigate to="/auth" replace />;
   if (!allowedRoles.includes(role)) return <Navigate to="/unauthorized" replace />;
 
   return children;

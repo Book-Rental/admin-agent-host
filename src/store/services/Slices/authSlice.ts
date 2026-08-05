@@ -2,15 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface UserInfo {
   _id: string;
-  firstName: string;
-  lastName: string;
   email: string;
-  userType: string;
-  isVerified: boolean;
+  role: "ADMIN" | "HUB_MANAGER" | "AGENT";
   status: string;
+  isActive: boolean;
 }
 
-export type AppRole = "admin" | "agent" | null;
+export type AppRole = "ADMIN" | "HUB_MANAGER" | "AGENT" | null;
 
 export interface AuthState {
   userInfo: UserInfo | null;
@@ -35,6 +33,7 @@ const authSlice = createSlice({
     loginSuccess: (state, action: PayloadAction<LoginPayload>) => {
       state.userInfo = action.payload.userInfo;
       state.isAuthenticated = true;
+      state.role = action.payload.userInfo.role;
     },
 
     setRole: (state, action: PayloadAction<AppRole>) => {

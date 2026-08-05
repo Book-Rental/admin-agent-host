@@ -6,11 +6,12 @@ import { BrowserRouter } from "react-router-dom";
 import { persistor, store } from "./store/store";
 import App from "./App";
 import "./index.css";
+import { Rb_LoadingSpinner } from "@rentbook/rentbook-ui-lib";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={<Rb_LoadingSpinner />} persistor={persistor}>
         <BrowserRouter>
           <App />
         </BrowserRouter>
