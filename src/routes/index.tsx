@@ -6,6 +6,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import MainLayout from "../modules/mainModule";
 import Admin from "../pages/Admin";
 import Agent from "../pages/Agent";
+import { ScrollToTop } from "../components/ScrollToTop";
 
 const RootRedirect = () => {
   const { isAuthenticated, role } = useSelector((state: RootState) => state.auth);
@@ -22,6 +23,9 @@ const RootRedirect = () => {
 };
 
 const AppRoutes = () => (
+
+  <>
+   <ScrollToTop />
   <Routes>
     <Route path="/" element={<RootRedirect />} />
     <Route path="/auth" element={<AuthPage />} />
@@ -112,6 +116,7 @@ const AppRoutes = () => (
 
     <Route path="*" element={<Navigate to="/" replace />} />
   </Routes>
+  </>
 );
 
 export default AppRoutes;
