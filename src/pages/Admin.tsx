@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { loadWidget, removeWidget } from "../utils/widgetLoader";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { Rb_LoadingSpinner } from "@rentbook/rentbook-ui-lib";
+import WidgetSkeleton from "../components/WidgetSkeleton";
 
 
 const ADMIN_WIDGET = import.meta.env.VITE_ADMIN_WIDGET_URL;
@@ -24,7 +24,7 @@ const Admin = ({ view }: AdminProps) => {
 
     const { userInfo } = useSelector((state: RootState) => state.auth);
     const [isLoading, setIsLoading] = useState(true);
-  
+
     useEffect(() => {
         if (!ADMIN_WIDGET) {
             console.error("Widget URL is undefined.");
@@ -60,8 +60,8 @@ const Admin = ({ view }: AdminProps) => {
     return (
         <div className="relative w-full min-h-[400px]">
             {isLoading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-gray-50/50">
-                    <Rb_LoadingSpinner />
+                <div className="absolute inset-0 bg-white z-10">
+                    <WidgetSkeleton />
                 </div>
             )}
             <div
