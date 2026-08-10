@@ -16,7 +16,9 @@ interface AdminProps {
     | "agent-details"
     | "edit-agent"
     | "order-details"
-    | "orders";
+    | "orders"
+    | "destination-shipments";
+
 }
 
 
@@ -24,7 +26,7 @@ const Admin = ({ view }: AdminProps) => {
 
     const { userInfo } = useSelector((state: RootState) => state.auth);
     const [isLoading, setIsLoading] = useState(true);
-  
+
     useEffect(() => {
         if (!ADMIN_WIDGET) {
             console.error("Widget URL is undefined.");
