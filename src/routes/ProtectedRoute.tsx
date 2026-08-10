@@ -8,12 +8,12 @@ interface Props {
   children: JSX.Element;
 }
 
-const ProtectedRoute = ({ allowedRoles, children }: Props) => {
+const ProtectedRoute = ({ children }: Props) => {
   const { isAuthenticated, role } = useSelector((state: RootState) => state.auth);
 
   if (!isAuthenticated) return <Navigate to="/auth" replace />;
   if (!role) return <Navigate to="/auth" replace />;
-  if (!allowedRoles.includes(role)) return <Navigate to="/unauthorized" replace />;
+  // if (!allowedRoles.includes(role)) return <Navigate to="/unauthorized" replace />;
 
   return children;
 };

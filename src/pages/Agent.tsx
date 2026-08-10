@@ -3,10 +3,11 @@ import { useLocation, useParams } from "react-router-dom";
 import { loadWidget, removeWidget } from "../utils/widgetLoader";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import WidgetSkeleton from "../components/WidgetSkeleton";
 
 interface AgentPageProps {
-  module: "pickup" | "delivery";
-  view:
+    module: "pickup" | "delivery";
+    view:
     | "orders"
     | "details"
     | "verification"
@@ -21,23 +22,22 @@ const Agent = ({ module, view }: AgentPageProps) => {
     const location = useLocation();
     const { shipmentId } = useParams<{ shipmentId?: string }>();
     const [isLoading, setIsLoading] = useState(true);
-    console.log("isLoading",isLoading)
+
     useEffect(() => {
         if (!AGENT_WIDGET) {
             console.error("Widget URL is undefined.");
             return;
         }
-
-        const handleWidgetLoading = (event: Event) => {
-            const customEvent = event as CustomEvent<boolean>;
-            if (customEvent.detail !== undefined) {
-                setIsLoading(customEvent.detail);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const handleWidgetLoading = (event: any) => {
+            if (event.detail !== undefined) {
+                setIsLoading(event.detail);
             }
         };
 
-        window.addEventListener( "widget-loading-status", handleWidgetLoading );
+        window.addEventListener("widget-loading-status", handleWidgetLoading);
 
-        const widgetParams = { name: "agent-widget",  module, view, shipmentId ,userInfo, };
+        const widgetParams = { name: "agent-widget", module, view, shipmentId, userInfo, };
         loadWidget(
             AGENT_WIDGET,
             AGENT_CONTAINER_ID,
@@ -51,13 +51,20 @@ const Agent = ({ module, view }: AgentPageProps) => {
             );
             removeWidget(AGENT_CONTAINER_ID);
         };
-    }, [module , view,shipmentId, location.pathname,userInfo]);
+    }, [module, view, shipmentId, location.pathname, userInfo]);
 
     return (
-        <div
-            id={AGENT_CONTAINER_ID}
-            className="min-h-[calc(100vh-64px)] w-full"
-        ></div>
+        <div className="relative w-full min-h-[400px]">
+            {isLoading && (
+                <div className="absolute inset-0 bg-white z-10">
+                    <WidgetSkeleton />
+                </div>
+            )}
+            <div
+                id={AGENT_CONTAINER_ID}
+                className={isLoading ? "invisible h-0 overflow-hidden" : "min-h-[calc(100vh-64px)] w-full"}
+            ></div>
+        </div>
     );
 };
 

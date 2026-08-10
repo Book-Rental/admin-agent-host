@@ -11,7 +11,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { userInfo, role } = useSelector((state: RootState) => state.auth);
+  const { userInfo } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -41,9 +41,6 @@ const Header = () => {
           Logistics<span className="text-blue-600">Admin</span>
         </span>
 
-        <span className="text-xs font-medium text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full capitalize">
-          {role} Console
-        </span>
       </div>
 
       <div className="relative" ref={menuRef}>
