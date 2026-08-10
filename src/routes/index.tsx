@@ -94,6 +94,14 @@ const AppRoutes = () => (
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/destination-shipments"
+        element={
+          <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
+            <Admin view="destination-shipments" />
+          </ProtectedRoute>
+        }
+      />
 
 
       <Route

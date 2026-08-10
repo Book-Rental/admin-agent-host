@@ -16,7 +16,9 @@ interface AdminProps {
     | "agent-details"
     | "edit-agent"
     | "order-details"
-    | "orders";
+    | "orders"
+    | "destination-shipments";
+
 }
 
 
