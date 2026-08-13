@@ -17,7 +17,9 @@ interface AdminProps {
     | "edit-agent"
     | "order-details"
     | "orders"
-    | "destination-shipments";
+    | "destination-shipments"
+    | "hubs"
+    | "hub-details";
 
 }
 

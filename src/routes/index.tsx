@@ -25,105 +25,117 @@ const RootRedirect = () => {
 const AppRoutes = () => (
 
   <>
-   <ScrollToTop />
-  <Routes>
-    <Route path="/" element={<RootRedirect />} />
-    <Route path="/auth" element={<AuthPage />} />
-    <Route path="/unauthorized" element={<div>Not authorized</div>} />
+    <ScrollToTop />
+    <Routes>
+      <Route path="/" element={<RootRedirect />} />
+      <Route path="/auth" element={<AuthPage />} />
+      <Route path="/unauthorized" element={<div>Not authorized</div>} />
 
-    <Route element={<MainLayout />}>
-      <Route
-        path="/admin/*"
-        element={
-          <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
-            <Admin view="admin" />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/agents"
-        element={
-          <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
-            <Admin view="agents" />
-          </ProtectedRoute>
-        }
-      />
+      <Route element={<MainLayout />}>
+        <Route
+          path="/admin/*"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
+              <Admin view="admin" />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/agents"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
+              <Admin view="agents" />
+            </ProtectedRoute>
+          }
+        />
 
-      {/* Create Agent */}
-      <Route
-        path="/agents/new"
-        element={
-          <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
-            <Admin view="create-agent" />
-          </ProtectedRoute>
-        }
-      />
+        {/* Create Agent */}
+        <Route
+          path="/agents/new"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
+              <Admin view="create-agent" />
+            </ProtectedRoute>
+          }
+        />
 
-      {/* Agent Details */}
-      <Route
-        path="/agents/:agentId"
-        element={
-          <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
-            <Admin view="agent-details" />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/orders"
-        element={
-          <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
-            <Admin view="orders" />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/orders/:id"
-        element={
-          <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
-            <Admin view="order-details" />
-          </ProtectedRoute>
-        }
-      />
+        {/* Agent Details */}
+        <Route
+          path="/agents/:agentId"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
+              <Admin view="agent-details" />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
+              <Admin view="orders" />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/orders/:id"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
+              <Admin view="order-details" />
+            </ProtectedRoute>
+          }
+        />
 
-      {/* Edit Agent */}
-      <Route
-        path="/agents/:agentId/edit"
-        element={
-          <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
-            <Admin view="edit-agent" />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/destination-shipments"
-        element={
-          <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
-            <Admin view="destination-shipments" />
-          </ProtectedRoute>
-        }
-      />
+        {/* Edit Agent */}
+        <Route
+          path="/agents/:agentId/edit"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
+              <Admin view="edit-agent" />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/destination-shipments"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
+              <Admin view="destination-shipments" />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/hubs"
+          element={
+            <ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER"]}>
+              <Admin view="hubs" />
+            </ProtectedRoute>
+          }
+        />
 
-
-      <Route
-        element={
-          <ProtectedRoute allowedRoles={["AGENT"]}>
-            <Outlet />
+        <Route path="/hubs/:hubId"
+          element={<ProtectedRoute allowedRoles={["ADMIN", "HUB_MANAGER",]} >
+            <Admin view="hub-details" />
           </ProtectedRoute>
-        }
-      >
-        <Route path="/agent/pickup-orders" element={<Agent module="pickup" view="orders" />} />
-        <Route path="/agent/pickup-orders/:shipmentId" element={<Agent module="pickup" view="details" />} />
-        <Route path="/agent/pickup-orders/:shipmentId/pickup-verification" element={<Agent module="pickup" view="verification" />} />
-        <Route path="/agent/pickup-orders/:shipmentId/confirmation" element={<Agent module="pickup" view="confirmation" />} />
-        <Route path="/agent/delivery-orders" element={<Agent module="delivery" view="orders" />} />
-        <Route path="/agent/delivery-orders/:shipmentId" element={<Agent module="delivery" view="details" />} />
-        <Route path="/agent/delivery-orders/:shipmentId/delivery-verification" element={<Agent module="delivery" view="verification" />} />
-        <Route path="/agent/delivery-orders/:shipmentId/confirmation" element={<Agent module="delivery" view="confirmation" />} />
+          } />
+        <Route
+          element={
+            <ProtectedRoute allowedRoles={["AGENT"]}>
+              <Outlet />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="/agent/pickup-orders" element={<Agent module="pickup" view="orders" />} />
+          <Route path="/agent/pickup-orders/:shipmentId" element={<Agent module="pickup" view="details" />} />
+          <Route path="/agent/pickup-orders/:shipmentId/pickup-verification" element={<Agent module="pickup" view="verification" />} />
+          <Route path="/agent/pickup-orders/:shipmentId/confirmation" element={<Agent module="pickup" view="confirmation" />} />
+          <Route path="/agent/delivery-orders" element={<Agent module="delivery" view="orders" />} />
+          <Route path="/agent/delivery-orders/:shipmentId" element={<Agent module="delivery" view="details" />} />
+          <Route path="/agent/delivery-orders/:shipmentId/delivery-verification" element={<Agent module="delivery" view="verification" />} />
+          <Route path="/agent/delivery-orders/:shipmentId/confirmation" element={<Agent module="delivery" view="confirmation" />} />
+        </Route>
       </Route>
-    </Route>
 
-    <Route path="*" element={<Navigate to="/" replace />} />
-  </Routes>
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   </>
 );
 
