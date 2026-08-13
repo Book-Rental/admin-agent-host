@@ -20,7 +20,6 @@ interface AdminProps {
     | "destination-shipments"
     | "hubs"
     | "hub-details";
-
 }
 
 
