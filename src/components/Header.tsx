@@ -8,18 +8,14 @@ import type { RootState } from "../store/store";
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { userInfo } = useSelector((state: RootState) => state.auth);
+  const { userInfo, role } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (
-        menuRef.current &&
-        !menuRef.current.contains(e.target as Node)
-      ) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
         setMenuOpen(false);
       }
     };
@@ -39,19 +35,19 @@ const Header = () => {
   const initial = userInfo?.email?.[0]?.toUpperCase() ?? "U";
 
   return (
-    <header className="flex items-center justify-between px-8 h-16 bg-white shadow-sm sticky top-0 z-50">
+    <header className="flex items-center justify-between px-8 h-16 bg-white shadow-sm sticky top-0 z-10">
       <div className="flex items-center gap-3">
         <span className="text-lg font-bold text-slate-900 tracking-tight">
           Logistics<span className="text-blue-600">Admin</span>
         </span>
+
+        <span className="text-xs font-medium text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full capitalize">
+          {role} Console
+        </span>
       </div>
 
-      <div
-        className="relative z-50"
-        ref={menuRef}
-      >
+      <div className="relative" ref={menuRef}>
         <button
-          type="button"
           onClick={() => setMenuOpen((prev) => !prev)}
           className="flex items-center gap-2 px-2 py-1.5 rounded-full hover:bg-gray-50 transition-colors focus:outline-none"
         >
@@ -68,24 +64,9 @@ const Header = () => {
         </button>
 
         {menuOpen && (
-          <div
-            className="
-              absolute
-              top-full
-              right-0
-              mt-2
-              w-60
-              bg-white
-              rounded-xl
-              shadow-lg
-              border
-              border-gray-100
-              py-2
-              z-[9999]
-            "
-          >
+          <div className="absolute right-0 mt-2 w-60 bg-white rounded-xl shadow-lg border border-gray-100 py-2 overflow-hidden">
             <div className="px-4 py-3 border-b border-gray-100">
-              <p className="font-semibold text-sm text-slate-900 truncate">
+              <p className="font-semibold text-sm text-slate-900">
                 {userInfo?.email}
               </p>
 
@@ -95,7 +76,6 @@ const Header = () => {
             </div>
 
             <button
-              type="button"
               onClick={handleLogout}
               className="w-full flex items-center gap-2 text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
             >
