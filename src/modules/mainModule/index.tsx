@@ -48,7 +48,7 @@ const MainLayout = () => {
             <Header />
 
             <main className="flex-grow">
-                <div className="absolute top-20 left-64 right-4 z-10">
+               <div className="absolute top-20 left-64 right-4 z-20 max-md:relative max-md:top-20 max-md:left-0 max-md:right-0 max-md:mt-10 max-md:mb-3 max-md:px-4 max-md:py-2 max-md:z-10">
                     <Rb_BreadCrumb
                         items={breadcrumb}
                         onNavigate={navigate}
