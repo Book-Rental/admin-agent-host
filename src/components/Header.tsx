@@ -39,22 +39,7 @@ const Header = () => {
   const initial = userInfo?.email?.[0]?.toUpperCase() ?? "U";
 
   return (
-    <header
-      className="
-        relative
-        flex
-        items-center
-        justify-between
-        px-4
-        sm:px-8
-        h-16
-        bg-white
-        shadow-sm
-        sticky
-        top-0
-        z-50
-      "
-    >
+    <header className="flex items-center justify-between px-8 h-16 bg-white shadow-sm sticky top-0 z-50">
       <div className="flex items-center gap-3">
         <span className="text-lg font-bold text-slate-900 tracking-tight">
           Logistics<span className="text-blue-600">Admin</span>
@@ -62,40 +47,15 @@ const Header = () => {
       </div>
 
       <div
-        ref={menuRef}
         className="relative z-50"
+        ref={menuRef}
       >
         <button
           type="button"
-          onClick={() => {
-            setMenuOpen((prev) => !prev);
-          }}
-          className="
-            flex
-            items-center
-            gap-2
-            px-2
-            py-1.5
-            rounded-full
-            hover:bg-gray-50
-            transition-colors
-            focus:outline-none
-          "
+          onClick={() => setMenuOpen((prev) => !prev)}
+          className="flex items-center gap-2 px-2 py-1.5 rounded-full hover:bg-gray-50 transition-colors focus:outline-none"
         >
-          <div
-            className="
-              w-9
-              h-9
-              rounded-full
-              bg-blue-600
-              text-white
-              flex
-              items-center
-              justify-center
-              font-semibold
-              text-sm
-            "
-          >
+          <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold text-sm">
             {initial}
           </div>
 
@@ -121,7 +81,6 @@ const Header = () => {
               border
               border-gray-100
               py-2
-              overflow-hidden
               z-[9999]
             "
           >
@@ -138,19 +97,7 @@ const Header = () => {
             <button
               type="button"
               onClick={handleLogout}
-              className="
-                w-full
-                flex
-                items-center
-                gap-2
-                text-left
-                px-4
-                py-2.5
-                text-sm
-                text-red-600
-                hover:bg-red-50
-                transition-colors
-              "
+              className="w-full flex items-center gap-2 text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
             >
               <LogOut size={16} />
               Logout

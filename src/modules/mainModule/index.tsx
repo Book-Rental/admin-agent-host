@@ -8,11 +8,8 @@ import { getBreadcrumb } from "../../utils/breadcrumbHelper";
 const MainLayout = () => {
     const location = useLocation();
     const navigate = useNavigate();
-
     const [widgetLoaded, setWidgetLoaded] = useState(false);
-
-    console.log(widgetLoaded);
-
+    console.log(widgetLoaded)
     const breadcrumb = useMemo(() => {
         const dynamicBreadcrumb = getBreadcrumb(
             location.pathname,
@@ -50,7 +47,7 @@ const MainLayout = () => {
         <div className="flex flex-col min-h-screen">
             <Header />
 
-            <main className="relative flex-grow z-0">
+            <main className="flex-grow">
                 <div className="absolute top-20 left-64 right-4 z-10">
                     <Rb_BreadCrumb
                         items={breadcrumb}
