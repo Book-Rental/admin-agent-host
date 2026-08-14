@@ -39,7 +39,7 @@ const Header = () => {
   const initial = userInfo?.email?.[0]?.toUpperCase() ?? "U";
 
   return (
-    <header className="flex items-center justify-between px-8 h-16 bg-white shadow-sm sticky top-0 z-50">
+    <header className="flex items-center justify-between px-4 sm:px-8 h-16 bg-white shadow-sm sticky top-0 z-50">
       <div className="flex items-center gap-3">
         <span className="text-lg font-bold text-slate-900 tracking-tight">
           Logistics<span className="text-blue-600">Admin</span>
@@ -70,10 +70,9 @@ const Header = () => {
         {menuOpen && (
           <div
             className="
-              absolute
-              top-full
-              right-0
-              mt-2
+              fixed
+              top-16
+              right-2
               w-60
               bg-white
               rounded-xl
@@ -81,7 +80,7 @@ const Header = () => {
               border
               border-gray-100
               py-2
-              z-[9999]
+              z-[99999]
             "
           >
             <div className="px-4 py-3 border-b border-gray-100">
