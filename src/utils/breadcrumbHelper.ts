@@ -67,7 +67,7 @@ export const getBreadcrumb = (
     !pathname.includes("/delivery-verification") &&
     !pathname.includes("/confirmation")
   ) {
-    const shipmentId = pathname.split("/")[3];
+    // const shipmentId = pathname.split("/")[3];
 
     return [
       {
@@ -76,7 +76,7 @@ export const getBreadcrumb = (
       },
       {
         label: "Delivery Details",
-        path: `/agent/delivery-orders/${shipmentId}`,
+        // path: `/agent/delivery-orders/${shipmentId}`,
       },
     ];
   }
