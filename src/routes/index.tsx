@@ -108,6 +108,16 @@ const AppRoutes = () => (
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/employee/:employeeId"
+          element={
+            <ProtectedRoute
+              allowedRoles={["ADMIN", "HUB_MANAGER"]}
+            >
+              <Admin view="employee-details" />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Orders */}
         <Route
