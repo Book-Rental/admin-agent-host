@@ -19,7 +19,8 @@ interface AdminProps {
     | "orders"
     | "destination-shipments"
     | "hubs"
-    | "hub-details";
+    | "hub-details"
+    | "employee-details";
 }
 
 
