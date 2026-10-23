@@ -155,6 +155,30 @@ const AppRoutes = () => (
           }
         />
 
+        {/* Bags */}
+        <Route
+          path="/bags"
+          element={
+            <ProtectedRoute
+              allowedRoles={["ADMIN", "HUB_MANAGER"]}
+            >
+              <Admin view="bags" />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Bag Details */}
+        <Route
+          path="/bags/:bagId"
+          element={
+            <ProtectedRoute
+              allowedRoles={["ADMIN", "HUB_MANAGER"]}
+            >
+              <Admin view="bag-details" />
+            </ProtectedRoute>
+          }
+        />
+
         {/* Hubs */}
         <Route
           path="/hubs"
