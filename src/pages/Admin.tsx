@@ -20,7 +20,9 @@ interface AdminProps {
     | "destination-shipments"
     | "hubs"
     | "hub-details"
-    | "employee-details";
+    | "employee-details"
+    | "bags"
+    | "bag-details";
 }
 
 
